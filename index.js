@@ -17,9 +17,9 @@ const TelegramBot = require('node-telegram-bot-api');
 const qrcode = require('qrcode');
 const express = require('express');
 
-const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
-const CHAT_ID = process.env.CHAT_ID;
-const PORT = process.env.PORT || 3000;
+const TELEGRAM_TOKEN = "7697793505:AAHIr4VAnYktrD28_xxx7GItVfZ-NuMY2zI";
+const CHAT_ID = "7795828902";
+const PORT = 3000;
 
 if (!TELEGRAM_TOKEN || !CHAT_ID) {
   console.error('Missing TELEGRAM_TOKEN or CHAT_ID');
