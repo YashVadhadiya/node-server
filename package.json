@@ -7,10 +7,12 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.19.2",
-    "node-telegram-bot-api": "^0.66.0",
+    "@sparticuz/chromium": "^143.0.4",
+    "express": "^4.22.1",
+    "node-telegram-bot-api": "^0.63.0",
+    "puppeteer-core": "^24.35.0",
     "qrcode": "^1.5.4",
     "qrcode-terminal": "^0.12.0",
-    "whatsapp-web.js": "^1.25.0"
+    "whatsapp-web.js": "^1.34.4"
   }
 }
