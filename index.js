@@ -24,7 +24,6 @@ const express = require('express');
 const chromium = require('@sparticuz/chromium');
 const puppeteer = require('puppeteer-core');
 
-
 const TELEGRAM_TOKEN = "7697793505:AAHIr4VAnYktrD28_xxx7GItVfZ-NuMY2zI";
 const CHAT_ID = "7795828902";
 const PORT = 3000;
@@ -102,26 +101,28 @@ async function start() {
   client.on('message', async (msg) => {
     try {
       const contact = await msg.getContact();
-      const name = escapeHTML(contact.pushname || contact.number || msg.from);
-      const body = escapeHTML(msg.body || '[Media]');
+      const name = escapeHTML(contact.pushname || contact.number || 'Unknown');
+      const bodyText = typeof msg.body === 'string' ? msg.body : '';
+      const body = escapeHTML(bodyText || '[Media]');
 
-      const caption = `<b>📩 New WhatsApp Message</b>\n👤 ${name}\n📱 ${contact.number || msg.from}\n💬 ${body}`;
-      const key = 'in:' + msg.id.id;
-      if (dedupe(key)) return;
+      const text = `<b>📩 WhatsApp Message</b>
+👤 ${name}
+📱 ${contact.number || msg.from}
+💬 ${body}`;
 
       if (msg.hasMedia) {
         const media = await msg.downloadMedia();
-        const sizeMB = (media.data.length * 0.75) / (1024 * 1024);
-        if (sizeMB > MAX_MEDIA_SIZE_MB) {
-          return notify(caption + `\n⚠️ Media too large (${sizeMB.toFixed(2)} MB)`);
+        if (media && media.data) {
+          const buffer = Buffer.from(media.data, 'base64');
+          await bot.sendDocument(CHAT_ID, buffer, { caption: text, parse_mode: 'HTML' });
+        } else {
+          await notify(text);
         }
-        const buffer = Buffer.from(media.data, 'base64');
-        await sendDoc(buffer, caption, 'media');
       } else {
-        await notify(caption);
+        await notify(text);
       }
     } catch (e) {
-      await notify('⚠️ Incoming error: ' + escapeHTML(e.message));
+      await notify('⚠️ Message parse error: ' + escapeHTML(e.message || String(e)));
     }
   });
 
