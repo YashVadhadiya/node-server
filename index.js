@@ -34,8 +34,8 @@ const puppeteer = require('puppeteer-core');
 // ============================================================================
 
 const CONFIG = {
-  TELEGRAM_TOKEN = "8554837364:AAGONwsCELY2UYCmEJKKDZun2tGqUjs-Xtw",
-  CHAT_ID = "7795828902",
+  TELEGRAM_TOKEN: "8554837364:AAGONwsCELY2UYCmEJKKDZun2tGqUjs-Xtw",
+  CHAT_ID: "7795828902",
   PORT: 3000,
   MAX_RETRIES: 3,
   RECONNECT_DELAY: 5000,
